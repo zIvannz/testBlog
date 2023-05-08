@@ -11,7 +11,7 @@ use Auth;
 use App\Http\Controllers\ImageController;
 
 
-class PostController extends Controller
+class PostController extends ImageController
 {
 
     public function index()
@@ -40,11 +40,9 @@ class PostController extends Controller
         $post->description = $request->description;
         $post->save();
 
-        $image = new ImageController;
-        $image->downloadMainImage($request->image, $post->id);
+        $this->downloadMainImage($request->image, $post->id);
 
-        $images = new ImageController;
-        $images->downloadImages($request->images, $post->id);
+        $this->downloadImages($request->images, $post->id);
 
         return redirect()->route('home')->with('success', 'Create post success');
         
